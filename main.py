@@ -2,12 +2,20 @@ import configparser
 import epsimplelib
 import time
 import datetime
-import telepot
-from telepot.loop import MessageLoop
 import textwrap
 
+import telepot
+from telepot.loop import MessageLoop
+
+from pathlib import Path
+
+# Look for your absolute directory path
+script_path = (Path(__file__)).parent
+config_file = script_path / 'config.ini'
+print(config_file)
+
 config = configparser.RawConfigParser()
-config.read('config.ini')
+config.read(config_file.as_posix())
 telegram_bot_config = config.get('telegram', 'bot_id')
 
 
@@ -92,11 +100,13 @@ def action(msg):
              from: ' + msg['from']['username'])
     elif command == '/headinghome':
         now = datetime.datetime.now()
-        display("", [msg['from']['first_name'] + ' is heading home', 'at ' + now.strftime("%m/%d/%Y, %H:%M:%S")])
+        display("", [msg['from']['first_name'] + ' is heading home',
+                     'at ' + now.strftime("%m/%d/%Y, %H:%M:%S")])
         telegram_bot.sendMessage(chat_id, str(
             'Your message has been displayed.'))
         print('display: "' + msg['text'].replace("/display ", "") + '"\
              from: ' + msg['from']['username'])
+
 
 telegram_bot = telepot.Bot(telegram_bot_config)
 print(telegram_bot.getMe())
