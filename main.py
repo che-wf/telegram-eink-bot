@@ -16,7 +16,7 @@ print(config_file)
 
 config = configparser.RawConfigParser()
 config.read(config_file.as_posix())
-telegram_bot_config = config.get('telegram', 'bot_id')
+telegram_bot_id = config.get('telegram', 'bot_id')
 
 
 # eInk
@@ -108,7 +108,7 @@ def action(msg):
              from: ' + msg['from']['username'])
 
 
-telegram_bot = telepot.Bot(telegram_bot_config)
+telegram_bot = telepot.Bot(telegram_bot_id)
 print(telegram_bot.getMe())
 
 MessageLoop(telegram_bot, action).run_as_thread()
