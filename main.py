@@ -16,12 +16,12 @@ print(config_file)
 
 config = configparser.RawConfigParser()
 config.read(config_file.as_posix())
-telegram_bot_id = config.get('telegram', 'bot_id')
+telegram_bot_api_key = config.get('telegram', 'bot_api_key')
 
 
 # eInk
-EPD_WIDTH = 176
-EPD_HEIGHT = 264
+EPD_WIDTH = epsimplelib.DEVICE_WIDTH
+EPD_HEIGHT = epsimplelib.DEVICE_HEIGHT
 
 
 def toPercentHeight(num):
@@ -108,7 +108,7 @@ def action(msg):
              from: ' + msg['from']['username'])
 
 
-telegram_bot = telepot.Bot(telegram_bot_id)
+telegram_bot = telepot.Bot(telegram_bot_api_key)
 print(telegram_bot.getMe())
 
 MessageLoop(telegram_bot, action).run_as_thread()
